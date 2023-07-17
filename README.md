@@ -18,3 +18,4 @@
 - [ ] Rainbow brackets
 - [ ] Copilot
 - [ ] Ligatures
+- [ ] Auto formatting
