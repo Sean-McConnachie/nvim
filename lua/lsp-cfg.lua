@@ -8,6 +8,24 @@ lsp_defaults.capabilities = vim.tbl_deep_extend(
 	require('cmp_nvim_lsp').default_capabilities()
 )
 
+lspconfig.tsserver.setup {
+	on_attach = require('lsp-format').on_attach
+}
+
+lspconfig.html.setup {
+	cmd = { "html-languageserver", "--stdio" },
+	filetypes = { "html" },
+	init_options = {
+		configurationSection = { "html", "css", "javascript" },
+		embeddedLanguages = {
+			css = true,
+			javascript = true
+		}
+	},
+	settings = {},
+	--on_attach = require('lsp-format').on_attach
+}
+
 lspconfig.lua_ls.setup {
 	settings = {
 		Lua = {
@@ -30,8 +48,39 @@ lspconfig.lua_ls.setup {
 		},
 	},
 	on_attach = require("lsp-format").on_attach }
-lspconfig.pyright.setup({})
-lspconfig.clangd.setup({})
+lspconfig.pyright.setup({
+	on_attach = require('lsp-format').on_attach
+})
+lspconfig.clangd.setup({
+	on_attach = require('lsp-format').on_attach
+})
+
+local rust_attach = function(client)
+	require 'completion'.on_attach(client)
+	require 'lsp-format'.on_attach(client)
+end
+lspconfig.rust_analyzer.setup({
+	on_attach = rust_attach,
+	settings = {
+		["rust-analyzer"] = {
+			imports = {
+				granularity = {
+					group = "module",
+				},
+				prefix = "self",
+			},
+			cargo = {
+				buildScripts = {
+					enable = true,
+				},
+			},
+			procMacro = {
+				enable = true
+			},
+		}
+	},
+})
+
 lspconfig.gopls.setup {
 	cmd = { "gopls", "serve" },
 	filetypes = { "go", "gomod" },

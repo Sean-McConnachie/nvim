@@ -3,6 +3,9 @@ let g:loaded_netrwPlugin = 1
 let g:conoline_auto_enable = 1
 
 
+" HTML Formatting
+nnoremap <Leader>a :<C-u>s/<[^>]*>/\r&\r/g<CR>:<C-u>g/^$/d<CR>gg=G
+
 let g:go_highlight_structs = 1
 let g:go_highlight_methods = 1
 let g:go_highlight_functions = 1
