@@ -1,0 +1,6 @@
+require("plugins")
+require("telescope").setup({})
+require("langs")
+require("keybinds")
+require("ui")
+require("snippet-cfg")
